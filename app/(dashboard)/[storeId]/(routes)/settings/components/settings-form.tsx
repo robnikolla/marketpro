@@ -8,6 +8,7 @@ import { useParams, useRouter } from "next/navigation";
 import * as z from "zod";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useOrigin } from "@/hooks/use-origin";
 
 import { Separator } from "@/components/ui/separator";
 import { Heading } from "@/components/ui/heading";
@@ -39,6 +40,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const [loading, setLoading] = useState(false);
   const params = useParams();
   const router = useRouter();
+  const origin = useOrigin();
 
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(formSchema),
@@ -91,14 +93,14 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
           onClick={() => setOpen(true)}
           disabled={loading}
         >
-          <Trash className="h-4 w-4" />
+          <Trash className="w-4 h-4" />
         </Button>
       </div>
       <Separator />
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 w-full"
+          className="w-full space-y-8"
         >
           <div className="grid grid-cols-3 gap-8">
             <FormField
