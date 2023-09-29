@@ -8,7 +8,6 @@ import { useParams, useRouter } from "next/navigation";
 import * as z from "zod";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { useOrigin } from "@/hooks/use-origin";
 
 import { Separator } from "@/components/ui/separator";
 import { Heading } from "@/components/ui/heading";
@@ -23,7 +22,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { ApiAlert } from "@/components/ui/api-alert";
 import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
@@ -52,7 +50,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
 
   const params = useParams();
   const router = useRouter();
-  const origin = useOrigin();
 
   const form = useForm<BillboardFormValues>({
     resolver: zodResolver(formSchema),
@@ -71,6 +68,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
         await axios.post(`/api/${params.storeId}/billboards`, data);
       }
       router.refresh();
+      router.push(`/${params.storeId}/billboards`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error("Something went wrong.");
@@ -83,12 +81,16 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     try {
       setLoading(true);
 
-      await axios.delete(`/api/stores/${params.storeId}`);
+      await axios.delete(
+        `/api/${params.storeId}/billboards/${params.billboardId}`
+      );
       router.refresh();
       router.push("/");
-      toast.success("Store deleted.");
+      toast.success("Billboard deleted.");
     } catch (error) {
-      toast.error("Make sure you removed all products and categories first");
+      toast.error(
+        "Make sure you removed all categories using this billboard first"
+      );
     } finally {
       setLoading(false);
       setOpen(false);
