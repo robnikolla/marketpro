@@ -26,12 +26,14 @@ export const columns: ColumnDef<ProductColumn>[] = [
     header: "Name",
     cell: ({ row }) => (
       <div className="flex flex-row items-center gap-x-5">
-        <Image
-          src={row?.original?.image}
-          alt="Product"
-          width={25}
-          height={25}
-        />
+        <div className="flex items-center justify-center p-2 border rounded-lg ">
+          <Image
+            src={row?.original?.image}
+            alt="Product"
+            width={30}
+            height={30}
+          />
+        </div>
         <p>{row.original.name}</p>
       </div>
     ),
@@ -78,7 +80,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
       <div className="flex items-center gap-x-2">
         {row.original.color}
         <div
-          className="w-6 h-6 border rounded-full"
+          className="w-6 h-6 border rounded-lg"
           style={{ backgroundColor: row.original.color }}
         ></div>
       </div>
