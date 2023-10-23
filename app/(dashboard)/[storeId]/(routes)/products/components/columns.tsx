@@ -1,6 +1,8 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
+import { Image as ImageProps } from "@prisma/client";
+import Image from "next/image";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -14,12 +16,24 @@ export type ProductColumn = {
   isFeatured: boolean;
   isArchived: boolean;
   createdAt: string;
+  image: string;
 };
 
 export const columns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "name",
     header: "Name",
+    cell: ({ row }) => (
+      <div className="flex flex-row items-center gap-x-5">
+        <Image
+          src={row?.original?.image}
+          alt="Product"
+          width={50}
+          height={50}
+        />
+        <p>{row.original.name}</p>
+      </div>
+    ),
   },
   {
     accessorKey: "isArchived",
