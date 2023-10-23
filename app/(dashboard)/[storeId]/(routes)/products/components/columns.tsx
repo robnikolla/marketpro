@@ -42,17 +42,19 @@ export const columns: ColumnDef<ProductColumn>[] = [
     cell: ({ row }) => {
       if (row.original.isFeatured && !row.original.isArchived) {
         return (
-          <div>
-            <p className="py-1 text-xs text-center text-green-600 bg-green-200 rounded-lg ">
+          <div className="flex ">
+            <p className="px-3 py-1 text-xs font-semibold text-center text-green-900 bg-green-200 rounded-lg ">
               Active
             </p>
           </div>
         );
       } else {
         return (
-          <p className="px-1 py-1 text-xs text-center rounded-lg text-slate-600 bg-slate-200">
-            Disabled
-          </p>
+          <div className="flex">
+            <p className="px-3 py-1 text-xs font-semibold text-center rounded-lg text-slate-900 bg-slate-200">
+              Disabled
+            </p>
+          </div>
         );
       }
     },
