@@ -3,6 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
 import { Image as ImageProps } from "@prisma/client";
 import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -28,20 +29,33 @@ export const columns: ColumnDef<ProductColumn>[] = [
         <Image
           src={row?.original?.image}
           alt="Product"
-          width={50}
-          height={50}
+          width={25}
+          height={25}
         />
         <p>{row.original.name}</p>
       </div>
     ),
   },
   {
-    accessorKey: "isArchived",
-    header: "Archived",
-  },
-  {
     accessorKey: "isFeatured",
-    header: "Featured",
+    header: "Status",
+    cell: ({ row }) => {
+      if (row.original.isFeatured && !row.original.isArchived) {
+        return (
+          <div>
+            <p className="py-1 text-xs text-center text-green-600 bg-green-200 rounded-lg ">
+              Active
+            </p>
+          </div>
+        );
+      } else {
+        return (
+          <p className="px-1 py-1 text-xs text-center rounded-lg text-slate-600 bg-slate-200">
+            Disabled
+          </p>
+        );
+      }
+    },
   },
   {
     accessorKey: "price",
