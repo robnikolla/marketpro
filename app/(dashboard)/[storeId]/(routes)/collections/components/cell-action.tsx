@@ -7,7 +7,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ProductColumn } from "./columns";
+import { CollectionColumn } from "./columns";
 import { Button } from "@/components/ui/button";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import toast from "react-hot-toast";
@@ -17,7 +17,7 @@ import axios from "axios";
 import { AlertModal } from "@/components/modals/alert-modal";
 
 interface CellActionProps {
-  data: ProductColumn;
+  data: CollectionColumn;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -36,12 +36,14 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     try {
       setLoading(true);
 
-      await axios.delete(`/api/${params.storeId}/products/${data.id}`);
+      await axios.delete(`/api/${params.storeId}/collections/${data.id}`);
       router.refresh();
 
-      toast.success("Product deleted.");
+      toast.success("Category deleted.");
     } catch (error) {
-      toast.error("Something went wrong!");
+      toast.error(
+        "Make sure you removed all products using this category first"
+      );
     } finally {
       setLoading(false);
       setOpen(false);
@@ -67,7 +69,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.storeId}/products/${data.id}`)
+              router.push(`/${params.storeId}/collections/${data.id}`)
             }
           >
             <Edit className="w-4 h-4 mr-2" />

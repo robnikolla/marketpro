@@ -3,15 +3,15 @@
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
-import { Billboard } from "@prisma/client";
+import { Category } from "@prisma/client";
 import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { ProductColumn, columns } from "./columns";
+import { CollectionColumn, columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import { ApiList } from "@/components/ui/api-list";
 
 interface CollectionClientProps {
-  data: ProductColumn[];
+  data: CollectionColumn[];
 }
 
 export const CollectionClient: React.FC<CollectionClientProps> = ({ data }) => {
@@ -36,7 +36,7 @@ export const CollectionClient: React.FC<CollectionClientProps> = ({ data }) => {
       <DataTable columns={columns} data={data} searchKey="name" />
       <Heading title="API" description="API calls for collections" />
       <Separator />
-      <ApiList entityName="collections" entityIdName="productId" />
+      <ApiList entityName="collections" entityIdName="collectionId" />
     </>
   );
 };
